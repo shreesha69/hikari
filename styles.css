@@ -778,6 +778,8 @@ img {
     grid-template-columns: 2fr 1fr 1fr 1.5fr;
     gap: 50px;
     margin-bottom: 80px;
+    position: relative;
+    z-index: 10;
 }
 
 .footer-logo-img {
@@ -1068,11 +1070,16 @@ img {
 }
 
 .back-to-top {
-    background: var(--accent-gold);
+    background: var(--gold-highlight);
+    color: var(--white);
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
     transition: all 0.4s ease;
+}
+
+.back-to-top i {
+    color: var(--white);
 }
 
 .back-to-top.visible {
