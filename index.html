@@ -255,8 +255,11 @@
         </div>
     </section>
 
-    <footer id="contact" class="footer luxury-footer">
-        <div class="container footer-grid">
+    <footer id="contact" class="footer luxury-footer" style="position: relative; overflow: hidden;">
+        <!-- Footer specific glitter background -->
+        <div id="footer-glitter" class="bg-effects" style="position: absolute; z-index: 0; pointer-events: none;"></div>
+        
+        <div class="container footer-grid" style="position: relative; z-index: 1;">
             <div class="footer-brand">
                 <a href="#home" class="logo"
                     style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; text-decoration: none;">
@@ -266,8 +269,9 @@
                         Hikari</span>
                 </a>
                 <p>Light Your Moments</p>
-                <p style="font-style: italic; margin-top: 15px; color: rgba(255,255,255,0.9);">“Glow gently. Live
-                    beautifully.”</p>
+                <div class="footer-quote brand-name" style="font-family: var(--font-serif); font-style: italic; font-size: 1.2rem; margin-top: 15px; font-weight: 500; letter-spacing: 1px;">
+                    “Glow gently. Live beautifully.”
+                </div>
                 <div class="social-links" style="margin-top: 25px;">
                     <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
