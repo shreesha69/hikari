@@ -1,0 +1,334 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hikari – Light Your Moments</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="icon" href="images/logo.jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="luxury-theme">
+
+    <!-- Mini Cart Sidebar -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart" id="closeCart" aria-label="Close Cart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items">
+            <!-- Example Items -->
+            <div class="cart-item">
+                <div class="item-details">
+                    <p class="item-name">Sakura Glow Candle</p>
+                    <p class="item-price">₹899</p>
+                </div>
+                <div class="item-qty">
+                    <span>1</span>
+                </div>
+            </div>
+            <div class="cart-item">
+                <div class="item-details">
+                    <p class="item-name">Aurora String Lights</p>
+                    <p class="item-price">₹699</p>
+                </div>
+                <div class="item-qty">
+                    <span>1</span>
+                </div>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Subtotal</span>
+                <span>₹1598</span>
+            </div>
+            <button class="btn btn-outline btn-full" id="continueShopping">Continue Shopping</button>
+            <button class="btn btn-primary btn-full checkout-btn">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Background Effects -->
+    <div class="bg-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+        <div id="particles-container"></div>
+    </div>
+
+    <!-- Sticky Navigation -->
+    <nav class="navbar glass-nav" id="navbar">
+        <div class="container nav-content">
+            <a href="#home" class="logo" id="navLogo"
+                style="display: flex; align-items: center; gap: 15px; text-decoration: none; position: relative;">
+                <img src="images/logo.jpeg" alt="Hikari Logo" class="nav-logo-img">
+                <span class="brand-name title-glow"
+                    style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 500; color: var(--gold-highlight); letter-spacing: 3px; position: relative; z-index: 2;">Hikari</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#candles">Candles</a></li>
+                <li><a href="#lights">Lights</a></li>
+                <li><a href="#occasions">Occasions</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" aria-label="Cart" class="cart-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">2</span>
+                </a>
+                <button class="mobile-menu-btn" aria-label="Toggle Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero luxury-hero hero-navbar-padding">
+        <div class="hero-bg luxury-hero-bg"></div>
+        <div class="hero-content container fade-in-up">
+            <h1 class="hero-title glow-text">Hikari – Light Your Moments</h1>
+            <p class="hero-quote"
+                style="font-family: var(--font-serif); font-size: 1.6rem; font-style: italic; margin-bottom: 25px; color: rgba(255,255,255,0.9);">
+                “Even the smallest light holds great beauty.”</p>
+            <p class="hero-subtitle">Elegant candles and decorative lighting crafted to bring warmth, calm and beautiful
+                light into your home.</p>
+            <div class="hero-actions">
+                <a href="#candles" class="btn btn-primary btn-glow">Shop Candles</a>
+                <a href="#lights" class="btn btn-outline btn-glass">Explore Lights</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Candles Section -->
+    <section id="candles" class="products section-padding">
+        <div class="container">
+            <div class="section-header text-center block-header">
+                <h2 class="section-title">Signature Candles</h2>
+            </div>
+            <div class="product-grid columns-3">
+                <!-- Product 1 -->
+                <div class="product-card luxury-card reveal">
+                    <div class="product-img-wrap">
+                        <div class="product-img" style="background-image: url('images/candles/c1.jpg');"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Sakura Glow Candle</h3>
+                        <p class="product-price">₹899</p>
+                        <button class="btn btn-outline btn-full add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="product-card luxury-card reveal" style="transition-delay: 0.1s;">
+                    <div class="product-img-wrap">
+                        <div class="product-img" style="background-image: url('images/candles/c2.jpg');"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Zen Garden Candle</h3>
+                        <p class="product-price">₹1099</p>
+                        <button class="btn btn-outline btn-full add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="product-card luxury-card reveal" style="transition-delay: 0.2s;">
+                    <div class="product-img-wrap">
+                        <div class="product-img" style="background-image: url('images/candles/c3.jpg');"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Midnight Bamboo Candle</h3>
+                        <p class="product-price">₹799</p>
+                        <button class="btn btn-outline btn-full add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lights Section -->
+    <section id="lights" class="products section-padding alt-bg-gradient">
+        <div class="container">
+            <div class="section-header text-center block-header">
+                <h2 class="section-title">Decor Lights</h2>
+                <p class="section-desc">Ambient lighting to transform your space into a peaceful sanctuary.</p>
+            </div>
+            <div class="product-grid columns-3">
+                <!-- Product 1 -->
+                <div class="product-card luxury-card reveal">
+                    <div class="product-img-wrap">
+                        <div class="product-img" style="background-image: url('images/candles/c3.jpg');"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Aurora String Lights</h3>
+                        <p class="product-price">₹699</p>
+                        <button class="btn btn-outline btn-full add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="product-card luxury-card reveal" style="transition-delay: 0.1s;">
+                    <div class="product-img-wrap">
+                        <div class="product-img" style="background-image: url('images/lights/l1.jpg');"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Kyoto Lantern Lamp</h3>
+                        <p class="product-price">₹1499</p>
+                        <button class="btn btn-outline btn-full add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="product-card luxury-card reveal" style="transition-delay: 0.2s;">
+                    <div class="product-img-wrap">
+                        <div class="product-img" style="background-image: url('images/lights/l3.jpg');"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Moonlight Table Glow</h3>
+                        <p class="product-price">₹1799</p>
+                        <button class="btn btn-outline btn-full add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Occasions Section -->
+    <section id="occasions" class="occasions section-padding">
+        <div class="container">
+            <h2 class="section-title text-center">Light for Every Occasion</h2>
+
+            <div class="occasion-grid-4 reveal">
+                <!-- Card 1 -->
+                <div class="occasion-card">
+                    <img src="images/occasions/bd.jpg" class="occasion-img" alt="Birthday Glow">
+                    <div class="occasion-overlay">
+                        <h4>Birthday Glow</h4>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="occasion-card">
+                    <img src="images/occasions/r1.jpg" class="occasion-img" alt="Romantic Evening">
+                    <div class="occasion-overlay">
+                        <h4>Romantic Evening</h4>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="occasion-card">
+                    <img src="images/occasions/fs.jpg" class="occasion-img" alt="Festival Radiance">
+                    <div class="occasion-overlay">
+                        <h4>Festival Radiance</h4>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="occasion-card">
+                    <img src="images/occasions/hm.jpg" class="occasion-img" alt="Home Ambience">
+                    <div class="occasion-overlay">
+                        <h4>Home Ambience</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Hikari -->
+    <section id="about" class="about section-padding alt-bg-gradient">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-img reveal">
+                    <img src="images/art.jpg" alt="Making of Hikari Candles">
+                </div>
+                <div class="about-content reveal" style="transition-delay: 0.2s;">
+                    <h2 class="section-title">The Art of Illumination</h2>
+                    <p>At Hikari, we believe that lighting is the soul of every space. Inspired by Japanese minimal
+                        design and the elegance of candlelight, our candles and lighting decor bring warmth, peace and
+                        beautiful ambience into everyday moments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="footer luxury-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="#home" class="logo"
+                    style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; text-decoration: none;">
+                    <img src="images/logo.jpeg" alt="Hikari Logo" class="footer-logo-img" style="margin-bottom: 0;">
+                    <span class="brand-name"
+                        style="font-family: var(--font-serif); font-size: 2rem; font-weight: 500; color: var(--gold-highlight); letter-spacing: 3px;">
+                        Hikari</span>
+                </a>
+                <p>Light Your Moments</p>
+                <p style="font-style: italic; margin-top: 15px; color: rgba(255,255,255,0.9);">“Glow gently. Live
+                    beautifully.”</p>
+                <div class="social-links" style="margin-top: 25px;">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#candles">Candles</a></li>
+                    <li><a href="#lights">Lights</a></li>
+                    <li><a href="#occasions">Occasions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-newsletter">
+                <h3>Stay in the Glow</h3>
+                <p>Subscribe to receive new candle collections.</p>
+                <form class="newsletter-form"
+                    style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                    <input type="email" placeholder="Your email address"
+                        style="padding: 14px 15px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; border-radius: 4px; outline: none; transition: border-color 0.3s ease;">
+                    <button type="submit" class="btn btn-primary"
+                        style="padding: 14px 15px; width: 100%; text-align: center;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom container">
+            <p>&copy; 2026 Hikari Decor. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Widgets -->
+    <div class="floating-widgets">
+        <button class="floating-btn back-to-top" id="backToTop" aria-label="Back to Top">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+        <a href="https://wa.me/something" class="floating-btn whatsapp-btn" aria-label="Chat to Order"
+            title="Chat to Order">
+            <i class="fab fa-whatsapp"></i>
+            <span class="tooltip">Chat to Order</span>
+        </a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
