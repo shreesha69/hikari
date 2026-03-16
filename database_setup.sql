@@ -1,13 +1,10 @@
--- Hikari Database Setup Script
--- Database: hikari_db
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
--- 1. Create Database
-CREATE DATABASE IF NOT EXISTS `hikari_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `hikari_db`;
+-- [CLEANED] Removed CREATE DATABASE and USE for cPanel compatibility.
+-- Make sure to select your database in phpMyAdmin BEFORE importing.
+
 
 -- 2. Users Table
 CREATE TABLE IF NOT EXISTS `users` (
