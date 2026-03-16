@@ -142,17 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- E-COMMERCE LOGIC (Local Storage Backend Simulation) ---
 
-    // 1. Data Store Initialization
-    // 1. Data Store Initialization
     let cart = JSON.parse(localStorage.getItem('hk_cart')) || [];
-    let users = JSON.parse(localStorage.getItem('hk_users')) || [
-        { name: 'Admin User', email: 'admin@hikari.com', password: 'admin', role: 'admin', phone: '0000', address: 'Hikari HQ' }
-    ];
     let currentUser = JSON.parse(localStorage.getItem('hk_currentUser')) || null;
-    let orders = JSON.parse(localStorage.getItem('hk_orders')) || [];
-    let customProducts = JSON.parse(localStorage.getItem('hk_products')) || [];
     let wishlist = JSON.parse(localStorage.getItem('hk_wishlist')) || [];
     let ratingsData = JSON.parse(localStorage.getItem('hk_ratings')) || {};
+    let customProducts = JSON.parse(localStorage.getItem('hk_products')) || [];
 
     let allProducts = [];
 
@@ -767,65 +761,81 @@ document.addEventListener('DOMContentLoaded', () => {
     // 9. Admin Panel Logic
     document.getElementById('openAdmin').addEventListener('click', (e) => {
         e.preventDefault();
-        renderAdminData();
-        openModal(adminModal);
-    });
-
-    const renderAdminData = () => {
-        // Users
-        document.getElementById('adminUserCount').textContent = users.length;
-        let usersHtml = '';
-        users.forEach(u => {
-            usersHtml += `
-                <div class="admin-list-item">
-                    <h4>${u.name} ${u.role === 'admin' ? '<span style="font-size: 0.8rem; background: var(--gold-highlight); color: white; padding: 2px 6px; border-radius: 4px;">Admin</span>' : ''}</h4>
-                    <p><strong>Email:</strong> ${u.email}</p>
-                    <p><strong>Phone:</strong> ${u.phone}</p>
-                    <p><strong>Address:</strong> ${u.address}</p>
-                </div>
-            `;
-        });
-        document.getElementById('adminUsers').innerHTML = usersHtml;
-
-        // Orders
-        let ordersHtml = '';
-        if(orders.length === 0) {
-            ordersHtml = '<p>No orders yet.</p>';
+        if (currentUser && currentUser.role === 'admin') {
+            renderAdminUsers(); // Default tab
+            openModal(adminModal);
         } else {
-            [...orders].reverse().forEach(o => {
-                let items = o.items.map(i => `${i.quantity}x ${i.name}`).join(', ');
-                ordersHtml += `
-                    <div class="admin-list-item">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                            <h4 style="margin:0;">${o.id}</h4>
-                            <span style="color: var(--gold-highlight); font-weight: 500;">₹${o.total}</span>
-                        </div>
-                        <p><strong>Date:</strong> ${o.date}</p>
-                        <p><strong>Customer:</strong> ${o.customerName} (${o.customerEmail})</p>
-                        <p><strong>Address:</strong> ${o.customerAddress}</p>
-                        <p style="margin-top:8px; padding-top:8px; border-top: 1px solid rgba(0,0,0,0.05);"><strong>Items:</strong> ${items}</p>
-                    </div>
-                `;
-            });
+            alert("Access Denied.");
         }
-        document.getElementById('adminOrders').innerHTML = ordersHtml;
-
-        // Render Custom Products List (optional extra functionality)
-        renderAdminProducts();
-    };
+    });
 
     // Admin Tabs Navigation
     document.querySelectorAll('.admin-tab').forEach(tab => {
         tab.addEventListener('click', (e) => {
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+            const tabs = document.querySelectorAll('.admin-tab');
+            const contents = document.querySelectorAll('.admin-tab-content');
             
-            e.target.classList.add('active');
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
             
-            const targetId = 'admin' + e.target.dataset.tab.charAt(0).toUpperCase() + e.target.dataset.tab.slice(1);
-            document.getElementById(targetId).classList.add('active');
+            e.currentTarget.classList.add('active');
+            const target = e.currentTarget.dataset.tab;
+            document.getElementById('admin' + target.charAt(0).toUpperCase() + target.slice(1)).classList.add('active');
+            
+            if (target === 'users') renderAdminUsers();
+            if (target === 'orders') renderAdminOrders();
+            if (target === 'products') renderAdminProducts();
         });
     });
+
+    const renderAdminUsers = async () => {
+        const container = document.getElementById('adminUsers');
+        container.innerHTML = '<p class="text-center">Loading users...</p>';
+        try {
+            const resp = await fetch('users.php?role=admin');
+            const usersList = await resp.json();
+            document.getElementById('adminUserCount').textContent = usersList.length;
+            
+            container.innerHTML = usersList.map(u => `
+                <div class="admin-list-item" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); padding: 12px 0;">
+                    <div>
+                        <h4 style="margin:0; font-size: 1.1rem;">${u.name}</h4>
+                        <p style="margin: 3px 0; color: var(--text-muted); font-size: 0.9rem;">${u.email} | ${u.phone || 'N/A'}</p>
+                    </div>
+                    <span class="role-badge ${u.role}" style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase;">${u.role}</span>
+                </div>
+            `).join('');
+        } catch (err) {
+            container.innerHTML = '<p>Error loading users.</p>';
+        }
+    };
+
+    const renderAdminOrders = async () => {
+        const container = document.getElementById('adminOrders');
+        container.innerHTML = '<p class="text-center">Loading orders...</p>';
+        try {
+            const resp = await fetch('orders.php?role=admin');
+            const ordersList = await resp.json();
+            
+            if (ordersList.length === 0) {
+                container.innerHTML = '<p>No orders yet.</p>';
+                return;
+            }
+
+            container.innerHTML = ordersList.map(o => `
+                <div class="admin-list-item" style="border-bottom: 1px solid rgba(0,0,0,0.05); padding: 15px 0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <h4 style="margin:0;">#${o.id}</h4>
+                        <span style="color: var(--gold-highlight); font-weight: 600;">₹${o.total}</span>
+                    </div>
+                    <p><strong>Customer:</strong> ${o.customerName} (${o.customerEmail})</p>
+                    <p><strong>Date:</strong> ${o.date} | <strong>Status:</strong> <span style="color:var(--gold-highlight)">${o.status}</span></p>
+                </div>
+            `).join('');
+        } catch (err) {
+            container.innerHTML = '<p>Error loading orders.</p>';
+        }
+    };
 
     // Adding dynamic product
     document.getElementById('adminAddProductForm').addEventListener('submit', (e) => {
