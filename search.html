@@ -107,7 +107,17 @@
         </div>
     </header>
 
-    <!-- Search Results Grid -->
+    <!-- Category Filter Controls -->
+    <div class="container" style="padding: 20px 0;">
+        <div style="display: flex; justify-content: flex-end;">
+            <select class="product-filter" data-target="search-results-grid" style="padding: 10px 20px; border: 1px solid var(--gold-highlight); background: transparent; font-family: var(--font-serif); color: var(--text-dark); outline: none;">
+                <option value="default">Sort By</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+            </select>
+        </div>
+    </div>
+
     <section class="products section-padding" style="padding-top: 20px;">
         <div class="container">
             <div class="product-grid columns-3" id="search-results-grid">

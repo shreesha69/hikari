@@ -219,38 +219,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize App
     const initApp = async () => {
-        const staticProducts = await API.getProducts();
-        allProducts = [...staticProducts, ...customProducts];
+        try {
+            const staticProducts = await API.getProducts();
+            allProducts = [...staticProducts, ...customProducts];
 
-        // Run dependent logic
-        const path = window.location.pathname;
-        if (path.includes('candles.html')) {
-            renderProductGrid('candles-grid', 'candles');
-        } else if (path.includes('lights.html')) {
-            renderProductGrid('lights-grid', 'lights');
-        } else if (path.includes('search.html')) {
-            handleSearchPage();
-        } else {
-            // Index or other
-            renderProductGrid('candles-grid', 'candles', 4);
-            renderProductGrid('lights-grid', 'lights', 4);
+            const path = window.location.pathname;
+            const filename = path.split('/').pop() || 'index.html';
+
+            if (filename === 'candles.html') {
+                renderProductGrid('candles-grid', 'candles');
+            } else if (filename === 'lights.html') {
+                renderProductGrid('lights-grid', 'lights');
+            } else if (filename === 'search.html') {
+                handleSearchPage();
+            } else if (filename === 'index.html' || filename === '') {
+                renderProductGrid('candles-grid', 'candles', 4);
+                renderProductGrid('lights-grid', 'lights', 4);
+            }
+
+            updateAuthUI();
+            updateCartUI();
+            updateWishlistUI();
+            rebindProductEvents();
+        } catch (error) {
+            console.error("App Init Error:", error);
         }
-
-        updateAuthUI();
-        updateCartUI();
-        updateWishlistUI();
-        rebindProductEvents();
     };
 
-    // Admin account exists by default if not created
-    if (!users.find(u => u.email === 'admin@hikari.com')) {
-        users.push({
-            id: 'u_admin', name: 'Admin', email: 'admin@hikari.com',
-            phone: '0000000000', address: 'Hikari HQ',
-            password: 'admin', role: 'admin'
-        });
-        localStorage.setItem('hk_users', JSON.stringify(users));
-    }
+    // Run Init
+    initApp();
 
     // 2. DOM Elements
     const searchInput = document.getElementById('searchInput');
@@ -337,10 +334,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 4. Auth Logic
-    document.getElementById('openLogin').addEventListener('click', (e) => { e.preventDefault(); openModal(loginModal); });
-    document.getElementById('openRegister').addEventListener('click', (e) => { e.preventDefault(); openModal(registerModal); });
-    document.getElementById('switchToRegister').addEventListener('click', (e) => { e.preventDefault(); openModal(registerModal); });
-    document.getElementById('switchToLogin').addEventListener('click', (e) => { e.preventDefault(); openModal(loginModal); });
+    const openLoginBtn = document.getElementById('openLogin');
+    const openRegisterBtn = document.getElementById('openRegister');
+    const switchRegBtn = document.getElementById('switchToRegister');
+    const switchLoginBtn = document.getElementById('switchToLogin');
+
+    if(openLoginBtn) openLoginBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(loginModal); });
+    if(openRegisterBtn) openRegisterBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(registerModal); });
+    if(switchRegBtn) switchRegBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(registerModal); });
+    if(switchLoginBtn) switchLoginBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(loginModal); });
 
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -393,17 +395,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 5. Search Logic & Dynamic Rendering
-    const renderProductGrid = (containerId, category = null, limit = null) => {
+    const renderProductGrid = (containerId, category = null, limit = null, sortBy = 'default') => {
         const grid = document.getElementById(containerId);
         if(!grid) return;
         
         let filtered = category ? allProducts.filter(p => p.category === category) : allProducts;
+        
+        // Sorting logic
+        if (sortBy === 'price-low') {
+            filtered.sort((a, b) => a.price - b.price);
+        } else if (sortBy === 'price-high') {
+            filtered.sort((a, b) => b.price - a.price);
+        } else if (sortBy === 'newest') {
+            filtered.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+        }
+
         if(limit) filtered = filtered.slice(0, limit);
         
         grid.innerHTML = filtered.map((p, idx) => `
             <div class="product-card luxury-card reveal" style="transition-delay: ${idx * 0.1}s;" data-id="${p.id}" data-category="${p.category}" data-desc="${p.description}">
                 <div class="product-img-wrap">
-                    <img src="${p.image}" alt="${p.name}" class="product-img" loading="lazy" onerror="this.src='https://source.unsplash.com/featured/800x800?${p.category === 'candles' ? 'luxury,candle' : 'luxury,lighting'}'">
+                    <img src="${p.image}" alt="${p.name}" class="product-img" loading="lazy" 
+                         onerror="this.onerror=null; this.src='images/logo.jpeg'; console.log('Image load failed, using fallback.');">
                     <button class="wishlist-heart-btn ${wishlist.some(w => w.id === p.id) ? 'active' : ''}" aria-label="Add to Wishlist" data-id="${p.id}">
                         <i class="${wishlist.some(w => w.id === p.id) ? 'fas' : 'far'} fa-heart"></i>
                     </button>
@@ -478,16 +491,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Mobile alignment fix handler
-        searchInput.addEventListener('focus', () => {
-            searchInput.parentElement.classList.add('focused');
-        });
-        searchInput.addEventListener('blur', () => {
-            searchInput.parentElement.classList.remove('focused');
-        });
+        // Mobile focus handlers
+        searchInput.addEventListener('focus', () => searchInput.parentElement.classList.add('focused'));
+        searchInput.addEventListener('blur', () => searchInput.parentElement.classList.remove('focused'));
     }
 
-    const handleSearchPage = () => {
+
+    // Filter Listeners
+    document.querySelectorAll('.product-filter').forEach(select => {
+        select.addEventListener('change', (e) => {
+            const containerId = e.target.dataset.target;
+            const sortBy = e.target.value;
+            
+            if (containerId === 'search-results-grid') {
+                handleSearchPage(sortBy);
+            } else {
+                const category = containerId.includes('candles') ? 'candles' : 'lights';
+                const limit = containerId.includes('grid-4') ? 4 : null;
+                renderProductGrid(containerId, category, limit, sortBy);
+            }
+        });
+    });
+
+
+    const handleSearchPage = (sortBy = 'default') => {
         const params = new URLSearchParams(window.location.search);
         const query = params.get('q')?.toLowerCase() || '';
         const resultsGrid = document.getElementById('search-results-grid');
@@ -495,6 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (searchTitle) searchTitle.textContent = query;
         if (!resultsGrid) return;
+
 
         // Smart Search Keywords
         const candleKeywords = ['candle', 'scented', 'aroma', 'wax', 'smell'];
@@ -525,7 +553,8 @@ document.addEventListener('DOMContentLoaded', () => {
             resultsGrid.innerHTML = filtered.map((p, idx) => `
                 <div class="product-card luxury-card reveal active" data-id="${p.id}" data-category="${p.category}">
                     <div class="product-img-wrap">
-                        <img src="${p.image}" alt="${p.name}" class="product-img" loading="lazy" onerror="this.src='https://source.unsplash.com/featured/800x800?${p.category === 'candles' ? 'luxury,candle' : 'luxury,lighting'}'">
+                        <img src="${p.image}" alt="${p.name}" class="product-img" loading="lazy" 
+                             onerror="this.onerror=null; this.src='images/logo.jpeg'; console.log('Image load failed, using fallback.');">
                         <button class="wishlist-heart-btn ${wishlist.some(w => w.id === p.id) ? 'active' : ''}" aria-label="Add to Wishlist" data-id="${p.id}">
                             <i class="${wishlist.some(w => w.id === p.id) ? 'fas' : 'far'} fa-heart"></i>
                         </button>

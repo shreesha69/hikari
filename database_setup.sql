@@ -62,6 +62,12 @@ VALUES ('Hikari Admin', 'admin@hikari.com', 'admin', 'admin');
 INSERT INTO `products` (`id`, `name`, `price`, `category`, `image`, `description`) VALUES
 ('c1', 'Sakura Glow Candle', 899.00, 'candles', 'images/candles/c1.jpg', 'A delicate blend of cherry blossom and warm vanilla.'),
 ('c2', 'Zen Garden Candle', 1099.00, 'candles', 'images/candles/c2.jpg', 'Calming matcha and sandalwood notes perfect for meditation.'),
-('l1', 'Aurora String Lights', 699.00, 'lights', 'images/candles/c3.jpg', 'Warm LED string lights inspired by the northern lights.');
+('c3', 'Midnight Bamboo Candle', 799.00, 'candles', 'images/candles/c3.jpg', 'Fresh bamboo and midnight musk. Elevate your evening routine.'),
+('c4', 'Kyoto Autumn Candle', 949.00, 'candles', 'https://images.unsplash.com/photo-1603006338315-eb3b32c45388?auto=format&fit=crop&q=80&w=800&h=800', 'Warm maple and spiced cedarwood. Captures the essence of autumn.'),
+('l1', 'Aurora String Lights', 699.00, 'lights', 'images/lights/l1.jpg', 'Warm LED string lights inspired by the northern lights.'),
+('l2', 'Kyoto Lantern Lamp', 1499.00, 'lights', 'images/lights/l2.jpg', 'Traditional Japanese lantern design with modern fading LED.'),
+('l3', 'Moonlight Table Glow', 1799.00, 'lights', 'images/lights/l3.jpg', 'A beautiful glowing sphere that mimics the soft light of a full moon.'),
+('l4', 'Vintage Edison Bulb Set', 1299.00, 'lights', 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&q=80&w=800&h=800', 'Warm amber glow with decorative filaments. Perfect for industrial interiors.');
+
 
 COMMIT;

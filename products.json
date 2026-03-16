@@ -100,7 +100,7 @@
         "name": "Aurora String Lights",
         "price": 699,
         "category": "lights",
-        "image": "images/candles/c3.jpg",
+        "image": "images/lights/l1.jpg",
         "description": "Warm LED string lights inspired by the northern lights. Creates a magical atmosphere in any room."
     },
     {
@@ -108,7 +108,7 @@
         "name": "Kyoto Lantern Lamp",
         "price": 1499,
         "category": "lights",
-        "image": "images/lights/l1.jpg",
+        "image": "images/lights/l2.jpg",
         "description": "Traditional Japanese lantern design with modern fading LED technology. Perfect bedside companion."
     },
     {
