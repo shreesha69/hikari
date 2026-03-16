@@ -1,0 +1,169 @@
+const products = [
+    // --- Candles ---
+    {
+        id: "c1",
+        name: "Sakura Glow Candle",
+        price: 899,
+        category: "candles",
+        image: "images/candles/c1.jpg",
+        description: "A delicate blend of cherry blossom and warm vanilla. Provides up to 45 hours of soothing light."
+    },
+    {
+        id: "c2",
+        name: "Zen Garden Candle",
+        price: 1099,
+        category: "candles",
+        image: "images/candles/c2.jpg",
+        description: "Calming matcha and sandalwood notes perfect for meditation. Hand-poured soy wax."
+    },
+    {
+        id: "c3",
+        name: "Midnight Bamboo Candle",
+        price: 799,
+        category: "candles",
+        image: "images/candles/c3.jpg",
+        description: "Fresh bamboo and midnight musk. Elevate your evening routine with this crisp fragrance."
+    },
+    {
+        id: "c4",
+        name: "Kyoto Autumn Candle",
+        price: 949,
+        category: "candles",
+        image: "https://images.unsplash.com/photo-1603006338315-eb3b32c45388?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Warm maple and spiced cedarwood. Captures the essence of autumn in a Kyoto forest."
+    },
+    {
+        id: "c5",
+        name: "Ocean Mist Candle",
+        price: 849,
+        category: "candles",
+        image: "https://images.unsplash.com/photo-1605651202774-905731c23911?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Sea salt and orchid breeze. Refreshing and airy, perfect for light-filled rooms."
+    },
+    {
+        id: "c6",
+        name: "Golden Sandalwood",
+        price: 1199,
+        category: "candles",
+        image: "https://images.unsplash.com/photo-1602850318393-f8232f22b821?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Rich sandalwood with a hint of honey. A luxurious, grounding scent for sophisticated spaces."
+    },
+    {
+        id: "c7",
+        name: "Lavender Dreams",
+        price: 749,
+        category: "candles",
+        image: "https://images.unsplash.com/photo-1602166943807-6bcf72c29579?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Pure French lavender and chamomile. Designed specifically for deep relaxation before sleep."
+    },
+    {
+        id: "c8",
+        name: "Spiced Tea Candle",
+        price: 899,
+        category: "candles",
+        image: "https://images.unsplash.com/photo-1596435707659-dc48d821d33d?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Black tea, cardamom, and cinnamon. A cozy, warming scent for cold winter nights."
+    },
+    {
+        id: "c9",
+        name: "White Jasmine Glow",
+        price: 999,
+        category: "candles",
+        image: "https://images.unsplash.com/photo-1602651034333-3d46313b26c2?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Elegant jasmine petals and green tea. Crisp floral notes that linger beautifully."
+    },
+    {
+        id: "c10",
+        name: "Forest Rain Candle",
+        price: 1049,
+        category: "candles",
+        image: "https://images.unsplash.com/photo-1572726376518-da1bd074fcc4?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Pine needles and damp earth. Bring the refreshing scent of a rain-washed forest indoors."
+    },
+
+    // --- Lights ---
+    {
+        id: "l1",
+        name: "Aurora String Lights",
+        price: 699,
+        category: "lights",
+        image: "images/candles/c3.jpg",
+        description: "Warm LED string lights inspired by the northern lights. Creates a magical atmosphere in any room."
+    },
+    {
+        id: "l2",
+        name: "Kyoto Lantern Lamp",
+        price: 1499,
+        category: "lights",
+        image: "images/lights/l1.jpg",
+        description: "Traditional Japanese lantern design with modern fading LED technology. Perfect bedside companion."
+    },
+    {
+        id: "l3",
+        name: "Moonlight Table Glow",
+        price: 1799,
+        category: "lights",
+        image: "images/lights/l3.jpg",
+        description: "A beautiful glowing sphere that mimics the soft light of a full moon. Ideal for relaxing spaces."
+    },
+    {
+        id: "l4",
+        name: "Vintage Edison Bulb Set",
+        price: 1299,
+        category: "lights",
+        image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Warm amber glow with decorative filaments. Perfect for industrial or rustic interiors."
+    },
+    {
+        id: "l5",
+        name: "Starlight Glass Globe",
+        price: 899,
+        category: "lights",
+        image: "https://images.unsplash.com/photo-1520691322145-207311f0816f?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Hand-blown glass sphere filled with tiny fairy lights. Creates a 'starry night' effect on surfaces."
+    },
+    {
+        id: "l6",
+        name: "Bamboo Floor Lantern",
+        price: 2499,
+        category: "lights",
+        image: "https://images.unsplash.com/photo-1534073828943-f801091bb2a6?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Tall woven bamboo lantern for a natural architectural look. Projects beautiful linear shadows."
+    },
+    {
+        id: "l7",
+        name: "Sunset Projection Lamp",
+        price: 799,
+        category: "lights",
+        image: "https://images.unsplash.com/photo-1616489953149-880056158d60?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Creates a warm, atmospheric sunset glow on your walls. Adjustable angle for different effects."
+    },
+    {
+        id: "l8",
+        name: "Copper Mesh Lights",
+        price: 599,
+        category: "lights",
+        image: "https://images.unsplash.com/photo-1543160495-202a35368a27?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Subtle copper wiring with micro LEDs. Adds a soft metallic sparkle to bookshelves or headboards."
+    },
+    {
+        id: "l9",
+        name: "Zen Rock Lamp",
+        price: 1899,
+        category: "lights",
+        image: "https://images.unsplash.com/photo-1578310344710-44be2519198d?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Carved from natural volcanic rock. Emits a soft, warm glow through the porous texture."
+    },
+    {
+        id: "l10",
+        name: "Hanging Star Lantern",
+        price: 1199,
+        category: "lights",
+        image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=800&h=800",
+        description: "Intricately cut paper star lantern. Perfect for festive decor or adding a bohemian touch."
+    }
+];
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = products;
+}

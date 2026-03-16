@@ -1,13 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hikari – Light Your Moments</title>
+    <title>Atmospheric Lights | Hikari – Light Your Moments</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Icons -->
     <link rel="icon" href="images/logo.jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,7 +32,7 @@
         <div class="cart-footer">
             <div class="cart-total">
                 <span>Subtotal</span>
-                <span>₹1598</span>
+                <span>₹0</span>
             </div>
             <button class="btn btn-outline btn-full" id="continueShopping">Continue Shopping</button>
             <button class="btn btn-primary btn-full checkout-btn">Checkout</button>
@@ -48,9 +48,9 @@
     </div>
 
     <!-- Sticky Navigation -->
-    <nav class="navbar glass-nav" id="navbar">
+    <nav class="navbar glass-nav scrolled" id="navbar">
         <div class="container nav-content">
-            <a href="#home" class="logo" id="navLogo"
+            <a href="index.html" class="logo" id="navLogo"
                 style="display: flex; align-items: center; gap: 15px; text-decoration: none; position: relative;">
                 <img src="images/logo.jpeg" alt="Hikari Logo" class="nav-logo-img">
                 <span class="brand-name title-glow"
@@ -59,8 +59,8 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="candles.html">Candles</a></li>
-                <li><a href="lights.html">Lights</a></li>
-                <li><a href="#about">Our Story</a></li>
+                <li><a href="lights.html" class="active">Lights</a></li>
+                <li><a href="index.html#about">Our Story</a></li>
             </ul>
             <div class="nav-icons">
                 <div class="search-container" style="display: inline-block; position: relative;">
@@ -99,130 +99,39 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero luxury-hero hero-navbar-padding">
-        <div class="hero-bg luxury-hero-bg"></div>
-        <div class="hero-content container fade-in-up">
-            <h1 class="hero-title glow-text">Hikari – Light Your Moments</h1>
-            <p class="hero-quote"
-                style="font-family: var(--font-serif); font-size: 1.6rem; font-style: italic; margin-bottom: 25px; color: rgba(255,255,255,0.9);">
-                “Even the smallest light holds great beauty.”</p>
-            <p class="hero-subtitle">Elegant candles and decorative lighting crafted to bring warmth, calm and beautiful
-                light into your home.</p>
-            <div class="hero-actions">
-                <a href="candles.html" class="btn btn-primary btn-glow">Shop Candles</a>
-                <a href="lights.html" class="btn btn-outline btn-glass">Explore Lights</a>
-            </div>
+    <!-- Header Section -->
+    <header class="section-padding" style="padding-top: 150px; text-align: center; background: var(--bg-cream);">
+        <div class="container fade-in-up">
+            <h1 class="section-title">Atmospheric Lights</h1>
+            <p class="section-desc">Illuminate your space with ethereal warmth.</p>
         </div>
-    </section>
+    </header>
 
-    <!-- Candles Section -->
-    <section id="candles" class="products section-padding">
-        <div class="container">
-            <div class="section-header text-center block-header" style="position: relative;">
-                <h2 class="section-title">Signature Candles</h2>
-                <div class="filter-dropdown-container">
-                    <select class="product-filter" data-target="candles-grid">
-                        <option value="default">Sort By</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                    </select>
-                </div>
-            </div>
-            <div class="product-grid columns-3" id="candles-grid">
-                <!-- Products dynamically loaded from products.js -->
-            </div>
-            <div class="text-center" style="margin-top: 50px;">
-                <a href="candles.html" class="btn btn-primary">Shop All Candles</a>
-            </div>
+    <!-- Category Filter Controls -->
+    <div class="container" style="padding: 20px 0;">
+        <div style="display: flex; justify-content: flex-end;">
+            <select class="product-filter" data-target="lights-grid" style="padding: 10px 20px; border: 1px solid var(--gold-highlight); background: transparent; font-family: var(--font-serif); color: var(--text-dark); outline: none;">
+                <option value="default">Sort By</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+            </select>
         </div>
-    </section>
+    </div>
 
-    <!-- Lights Section -->
-    <section id="lights" class="products section-padding alt-bg-gradient">
+    <!-- Product Grid -->
+    <section class="products section-padding" style="padding-top: 20px;">
         <div class="container">
-            <div class="section-header text-center block-header" style="position: relative;">
-                <h2 class="section-title">Decor Lights</h2>
-                <p class="section-desc">Ambient lighting to transform your space into a peaceful sanctuary.</p>
-                <div class="filter-dropdown-container">
-                    <select class="product-filter" data-target="lights-grid">
-                        <option value="default">Sort By</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                    </select>
-                </div>
-            </div>
             <div class="product-grid columns-3" id="lights-grid">
-                <!-- Products dynamically loaded from products.js -->
-            </div>
-            <div class="text-center" style="margin-top: 50px;">
-                <a href="lights.html" class="btn btn-primary">Explore All Lights</a>
+                <!-- Dynamically loaded -->
             </div>
         </div>
     </section>
 
-    <!-- Occasions Section -->
-    <section id="occasions" class="occasions section-padding">
-        <div class="container">
-            <h2 class="section-title text-center">Light for Every Occasion</h2>
-
-            <div class="occasion-grid-4 reveal">
-                <!-- Card 1 -->
-                <div class="occasion-card">
-                    <img src="images/occasions/bd.jpg" class="occasion-img" alt="Birthday Glow" loading="lazy">
-                    <div class="occasion-overlay">
-                        <h4>Birthday Glow</h4>
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="occasion-card">
-                    <img src="images/occasions/r1.jpg" class="occasion-img" alt="Romantic Evening" loading="lazy">
-                    <div class="occasion-overlay">
-                        <h4>Romantic Evening</h4>
-                    </div>
-                </div>
-                <!-- Card 3 -->
-                <div class="occasion-card">
-                    <img src="images/occasions/fs.jpg" class="occasion-img" alt="Festival Radiance" loading="lazy">
-                    <div class="occasion-overlay">
-                        <h4>Festival Radiance</h4>
-                    </div>
-                </div>
-                <!-- Card 4 -->
-                <div class="occasion-card">
-                    <img src="images/occasions/hm.jpg" class="occasion-img" alt="Home Ambience" loading="lazy">
-                    <div class="occasion-overlay">
-                        <h4>Home Ambience</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Hikari -->
-    <section id="about" class="about section-padding alt-bg-gradient">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-img reveal">
-                    <img src="images/art.jpg" alt="Making of Hikari Candles" loading="lazy">
-                </div>
-                <div class="about-content reveal" style="transition-delay: 0.2s;">
-                    <h2 class="section-title">The Art of Illumination</h2>
-                    <p><span class="kanji-highlight">光</span> Hikari believes that light is the soul of every space. Inspired by Japanese minimal design and the gentle beauty of candlelight, our candles and decorative lights are crafted to bring warmth, peace, and elegant ambience into everyday moments.</p>
-                    <p>From quiet evenings to joyful celebrations, Hikari lighting transforms simple spaces into beautiful experiences.</p>
-                    <blockquote class="about-quote">
-                        “Even the smallest light holds great beauty.”
-                    </blockquote>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- Same Footer as Index -->
     <footer id="contact" class="footer luxury-footer" style="position: relative; overflow: hidden;">
-        
         <div class="container footer-grid" style="position: relative; z-index: 1;">
             <div class="footer-brand">
-                <a href="#home" class="logo"
+                <a href="index.html" class="logo"
                     style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; text-decoration: none;">
                     <img src="images/logo.jpeg" alt="Hikari Logo" class="footer-logo-img" style="margin-bottom: 0;">
                     <span class="brand-name"
@@ -230,58 +139,43 @@
                         Hikari</span>
                 </a>
                 <p>Light Your Moments</p>
-                <div class="footer-quote brand-name" style="font-family: var(--font-serif); font-style: italic; font-size: 1.2rem; margin-top: 15px; font-weight: 500; letter-spacing: 1px;">
-                    “Glow gently. Live beautifully.”
-                </div>
                 <div class="social-links" style="margin-top: 25px;">
                     <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
-
             <div class="footer-links">
                 <h3>Shop</h3>
                 <ul>
-                    <li><a href="#candles">Candles</a></li>
-                    <li><a href="#lights">Lights</a></li>
-                    <li><a href="#occasions">Occasions</a></li>
+                    <li><a href="candles.html">Candles</a></li>
+                    <li><a href="lights.html">Lights</a></li>
+                    <li><a href="index.html#occasions">Occasions</a></li>
                 </ul>
             </div>
-
             <div class="footer-links">
                 <h3>Support</h3>
                 <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html#about">About</a></li>
                     <li><a href="#">Shipping</a></li>
                     <li><a href="#">Returns</a></li>
                 </ul>
             </div>
-
             <div class="footer-newsletter">
                 <h3>Stay in the Glow</h3>
-                <p>Subscribe to receive new candle collections.</p>
-                <form class="newsletter-form"
-                    style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
-                    <input type="email" placeholder="Your email address"
-                        style="padding: 14px 15px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; border-radius: 4px; outline: none; transition: border-color 0.3s ease;">
-                    <button type="submit" class="btn btn-primary"
-                        style="padding: 14px 15px; width: 100%; text-align: center;">Subscribe</button>
+                <p>Subscribe to receive new collections.</p>
+                <form class="newsletter-form" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                    <input type="email" placeholder="Your email address" style="padding: 14px 15px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; border-radius: 4px; outline: none;">
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
                 </form>
             </div>
         </div>
-
         <div class="footer-bottom container">
             <p>&copy; 2026 Hikari Decor. All rights reserved.</p>
-            <div class="footer-legal">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-            </div>
         </div>
     </footer>
 
-    <!-- Auth Modals -->
+    <!-- All Modals from Index -->
     <div class="modal-overlay" id="loginModal">
         <div class="modal-content luxury-card">
             <button class="close-modal"><i class="fas fa-times"></i></button>
@@ -295,7 +189,6 @@
             </form>
         </div>
     </div>
-
     <div class="modal-overlay" id="registerModal">
         <div class="modal-content luxury-card">
             <button class="close-modal"><i class="fas fa-times"></i></button>
@@ -312,8 +205,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Checkout Modal -->
     <div class="modal-overlay" id="checkoutModal">
         <div class="modal-content luxury-card" style="max-width: 600px;">
             <button class="close-modal"><i class="fas fa-times"></i></button>
@@ -327,14 +218,10 @@
                         <button type="submit" class="btn btn-primary btn-full" style="margin-top:10px;">Place Order</button>
                     </form>
                 </div>
-                <div class="checkout-summary-area" id="checkoutSummaryArea">
-                    <!-- dynamically populated -->
-                </div>
+                <div class="checkout-summary-area" id="checkoutSummaryArea"></div>
             </div>
         </div>
     </div>
-
-    <!-- Admin Panel Modal -->
     <div class="modal-overlay" id="adminModal">
         <div class="modal-content luxury-card" style="max-width: 800px; max-height: 80vh; overflow-y: auto;">
             <button class="close-modal"><i class="fas fa-times"></i></button>
@@ -344,15 +231,8 @@
                 <button class="admin-tab" data-tab="orders">Orders</button>
                 <button class="admin-tab" data-tab="products">Products</button>
             </div>
-            
-            <div class="admin-tab-content active" id="adminUsers">
-                <!-- dynamically populated -->
-            </div>
-            
-            <div class="admin-tab-content" id="adminOrders">
-                <!-- dynamically populated -->
-            </div>
-            
+            <div class="admin-tab-content active" id="adminUsers"></div>
+            <div class="admin-tab-content" id="adminOrders"></div>
             <div class="admin-tab-content" id="adminProducts">
                 <form id="adminAddProductForm" class="auth-form" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.1);">
                     <h4 style="margin-bottom: 10px;">Add New Product</h4>
@@ -362,28 +242,20 @@
                         <option value="candles">Candles</option>
                         <option value="lights">Lights</option>
                     </select>
-                    <input type="text" id="addProductImage" placeholder="Image URL (e.g. images/candles/c1.jpg)" required>
+                    <input type="text" id="addProductImage" placeholder="Image URL" required>
                     <button type="submit" class="btn btn-primary" style="margin-top:10px;">Add Product</button>
                 </form>
-                <div id="adminProductsList">
-                    <!-- dynamically populated -->
-                </div>
+                <div id="adminProductsList"></div>
             </div>
         </div>
     </div>
-    
-    <!-- Profile / Orders Modal -->
     <div class="modal-overlay" id="ordersModal">
         <div class="modal-content luxury-card" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
             <button class="close-modal"><i class="fas fa-times"></i></button>
             <h3 class="section-title text-center" style="font-size: 2rem;">My Orders</h3>
-            <div id="userOrdersList">
-                <!-- dynamically populated -->
-            </div>
+            <div id="userOrdersList"></div>
         </div>
     </div>
-
-    <!-- Quick View Modal -->
     <div class="modal-overlay" id="quickViewModal">
         <div class="modal-content luxury-card" style="max-width: 800px; padding: 0; overflow: hidden;">
             <button class="close-modal" style="z-index: 10; background: rgba(255,255,255,0.7); border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-times"></i></button>
@@ -395,37 +267,32 @@
                         <span class="stars">★★★★★</span> <span class="rating-count">(0)</span>
                     </div>
                     <p class="product-price" id="qvPrice" style="font-size: 1.4rem; color: var(--gold-highlight); margin-bottom: 20px;">₹0</p>
-                    <p id="qvDesc" style="color: var(--text-muted); line-height: 1.6; margin-bottom: 30px;">Description goes here.</p>
+                    <p id="qvDesc" style="color: var(--text-muted); line-height: 1.6; margin-bottom: 30px;">Description.</p>
                     <button class="btn btn-primary btn-full" id="qvAddToCartBtn">Add to Cart</button>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Wishlist Modal -->
     <div class="modal-overlay" id="wishlistModal">
         <div class="modal-content luxury-card" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
             <button class="close-modal"><i class="fas fa-times"></i></button>
             <h3 class="section-title text-center" style="font-size: 2rem;">My Wishlist</h3>
-            <div id="wishlistContainer" style="margin-top: 20px;">
-                <!-- dynamically populated -->
-            </div>
+            <div id="wishlistContainer" style="margin-top: 20px;"></div>
         </div>
     </div>
 
     <!-- Floating Widgets -->
     <div class="floating-widgets">
-        <button class="floating-btn back-to-top" id="backToTop" aria-label="Back to Top">
-            <i class="fas fa-chevron-up"></i>
-        </button>
         <a href="https://wa.me/919999999999?text=Hello%20I%20am%20interested%20in%20Hikari%20candles" class="floating-btn whatsapp-btn" aria-label="Chat to Order"
             title="Chat to Order" target="_blank">
             <i class="fab fa-whatsapp"></i>
             <span class="tooltip">Chat to Order</span>
         </a>
+        <button class="floating-btn back-to-top" id="backToTop" aria-label="Back to Top">
+            <i class="fas fa-chevron-up"></i>
+        </button>
     </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
