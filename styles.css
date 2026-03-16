@@ -691,7 +691,10 @@ img {
     height: 380px;
     overflow: hidden;
     cursor: pointer;
+    display: block;
+    text-decoration: none;
 }
+
 
 .occasion-img {
     position: absolute;

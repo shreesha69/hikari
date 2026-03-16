@@ -233,8 +233,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (filename === 'search.html') {
                 handleSearchPage();
             } else if (filename === 'index.html' || filename === '') {
-                renderProductGrid('candles-grid', 'candles', 4);
-                renderProductGrid('lights-grid', 'lights', 4);
+                renderProductGrid('candles-grid', 'candles', 3);
+                renderProductGrid('lights-grid', 'lights', 3);
             }
 
             updateAuthUI();

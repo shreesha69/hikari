@@ -26,7 +26,14 @@ try {
     $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 } catch(PDOException $e) {
-    // Handle connection error
-    die("Connection failed: " . $e->getMessage());
+    // Return connection error as JSON
+    header('Content-Type: application/json');
+    http_response_code(500);
+    echo json_encode([
+        "status" => "error",
+        "message" => "Database Connection Failed: " . $e->getMessage()
+    ]);
+    exit();
 }
+
 ?>
