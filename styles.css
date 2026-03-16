@@ -1242,7 +1242,7 @@ img {
         grid-template-columns: 1fr;
     }
     .section-padding {
-        padding: 60px 0;
+        padding: 50px 20px; /* Maintain padding on small screens */
     }
     .hero-title {
         font-size: 2.5rem;
@@ -1357,9 +1357,9 @@ img {
 }
 .user-dropdown a, .dropdown-header {
     display: block;
-    padding: 8px 20px;
-    font-size: 0.9rem;
-    color: var(--text-dark);
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    color: var(--text-dark) !important; /* Force dark text regardless of navbar state */
     text-transform: none;
     letter-spacing: 0.5px;
     font-family: var(--font-sans);
@@ -1403,11 +1403,20 @@ img {
     padding: 40px;
     border-radius: 8px;
     width: 90%;
-    max-width: 400px;
+    max-width: 450px;
     position: relative;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    box-shadow: 0 30px 100px rgba(0,0,0,0.3);
     transform: translateY(20px);
     transition: transform 0.3s ease;
+    z-index: 10001; /* Above overlay */
+    color: var(--text-dark); /* Ensure dark text */
+}
+.modal-content h3, .modal-content h4, .modal-content p {
+    color: var(--text-dark) !important;
+}
+.modal-content .section-title {
+    color: var(--text-dark);
+    margin-bottom: 25px;
 }
 @media (max-width: 576px) {
     .modal-content {
@@ -1437,17 +1446,22 @@ img {
 }
 .auth-form input, .auth-form textarea {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid rgba(0,0,0,0.1);
-    background: rgba(255,255,255,0.7);
+    padding: 14px 18px;
+    border: 1px solid rgba(0,0,0,0.15);
+    background: var(--white);
     border-radius: 4px;
     font-family: var(--font-sans);
     color: var(--text-dark);
+    font-size: 1rem;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
-.auth-form input:focus, .auth-form textarea:focus {
+.auth-form input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+.auth-form input:focus {
     border-color: var(--gold-highlight);
+    box-shadow: 0 0 10px rgba(194, 147, 99, 0.1);
 }
 .error-msg {
     color: #d9534f;

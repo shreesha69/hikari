@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('particles-container');
         if(!container) return;
         
-        const particleCount = 25; // Good amount of petals
+        const particleCount = 12; // Fewer petals for better performance
         
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
