@@ -160,31 +160,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const API = {
         getProducts: async () => {
             try {
-                // Future: const response = await fetch('api/get_products.php');
-                const response = await fetch('products.json');
-                return await response.json();
+                // Fetch from PHP API (MySQL Database)
+                const response = await fetch('get_products.php');
+                if (!response.ok) throw new Error('DB fetch failed');
+                const dbProducts = await response.json();
+                
+                // If DB is empty (first time), fallback to local JSON but show DB is active
+                if (dbProducts.length === 0) {
+                    console.log("DB empty, fetching from products.json fallback...");
+                    const fallback = await fetch('products.json');
+                    return await fallback.json();
+                }
+                return dbProducts;
             } catch (err) {
                 console.error("API Error (getProducts):", err);
-                return [];
+                // Final fallback to static JSON to keep site running
+                const staticResp = await fetch('products.json');
+                return await staticResp.json();
             }
         },
         login: async (email, password) => {
-            // Future: return fetch('api/login.php', { method: 'POST', body: JSON.stringify({email, password}) });
-            const user = users.find(u => u.email === email && u.password === password);
-            return user ? { success: true, user } : { success: false, message: 'Invalid credentials' };
+            try {
+                const response = await fetch('auth.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'login', email, password })
+                });
+                const result = await response.json();
+                return { success: result.status === 'success', ...result };
+            } catch (err) {
+                console.error("Auth Error:", err);
+                return { success: false, message: 'Server connection failed' };
+            }
         },
         register: async (userData) => {
-            // Future: return fetch('api/register.php', { method: 'POST', body: JSON.stringify(userData) });
-            if (users.find(u => u.email === userData.email)) return { success: false, message: 'Email exists' };
-            users.push(userData);
-            localStorage.setItem('hk_users', JSON.stringify(users));
-            return { success: true, user: userData };
+            try {
+                const response = await fetch('auth.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'register', ...userData })
+                });
+                const result = await response.json();
+                return { success: result.status === 'success', ...result };
+            } catch (err) {
+                console.error("Auth Error:", err);
+                return { success: false, message: 'Server connection failed' };
+            }
         },
         createOrder: async (orderData) => {
-            // Future: return fetch('api/create_order.php', { method: 'POST', body: JSON.stringify(orderData) });
-            orders.push(orderData);
-            localStorage.setItem('hk_orders', JSON.stringify(orders));
-            return { success: true };
+            try {
+                const response = await fetch('orders.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'create', ...orderData })
+                });
+                const result = await response.json();
+                return { success: result.status === 'success', ...result };
+            } catch (err) {
+                console.error("Order Error:", err);
+                return { success: false, message: 'Server connection failed' };
+            }
         }
     };
 
@@ -313,44 +348,44 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('switchToRegister').addEventListener('click', (e) => { e.preventDefault(); openModal(registerModal); });
     document.getElementById('switchToLogin').addEventListener('click', (e) => { e.preventDefault(); openModal(loginModal); });
 
-    document.getElementById('registerForm').addEventListener('submit', (e) => {
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const name = document.getElementById('regName').value;
-        const email = document.getElementById('regEmail').value;
-        const phone = document.getElementById('regPhone').value;
-        const address = document.getElementById('regAddress').value;
-        const password = document.getElementById('regPassword').value;
+        const userData = {
+            name: document.getElementById('regName').value,
+            email: document.getElementById('regEmail').value,
+            phone: document.getElementById('regPhone').value,
+            address: document.getElementById('regAddress').value,
+            password: document.getElementById('regPassword').value
+        };
 
-        if (users.find(u => u.email === email)) {
-            document.getElementById('regError').textContent = 'Email already exists.';
-            document.getElementById('regError').style.display = 'block';
-            return;
-        }
-
-        const newUser = { id: 'u_' + Date.now(), name, email, phone, address, password, role: 'user' };
-        users.push(newUser);
-        localStorage.setItem('hk_users', JSON.stringify(users));
+        const result = await API.register(userData);
         
-        currentUser = newUser;
-        localStorage.setItem('hk_currentUser', JSON.stringify(currentUser));
-        updateAuthUI();
-        closeAllModals();
-        alert('Registration successful!');
+        if (result.success) {
+            currentUser = result.user;
+            localStorage.setItem('hk_currentUser', JSON.stringify(currentUser));
+            updateAuthUI();
+            closeAllModals();
+            alert('Registration successful!');
+        } else {
+            document.getElementById('regError').textContent = result.message || 'Registration failed.';
+            document.getElementById('regError').style.display = 'block';
+        }
     });
 
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
 
-        const user = users.find(u => u.email === email && u.password === password);
-        if (user) {
-            currentUser = user;
+        const result = await API.login(email, password);
+        
+        if (result.success) {
+            currentUser = result.user;
             localStorage.setItem('hk_currentUser', JSON.stringify(currentUser));
             updateAuthUI();
             closeAllModals();
         } else {
-            document.getElementById('loginError').textContent = 'Invalid credentials.';
+            document.getElementById('loginError').textContent = result.message || 'Invalid credentials.';
             document.getElementById('loginError').style.display = 'block';
         }
     });
@@ -400,9 +435,10 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const card = e.target.closest('.product-card');
+                const id = card.dataset.id;
                 const name = card.querySelector('.product-name').textContent;
                 const price = card.querySelector('.product-price').textContent;
-                addToCart(name, price);
+                addToCart(id, name, price);
             });
         });
         
@@ -581,13 +617,13 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartUI();
     };
 
-    const addToCart = (name, price) => {
-        price = parseInt(price.replace('₹', '').replace(',', ''));
-        const existing = cart.find(i => i.name === name);
+    const addToCart = (id, name, price) => {
+        price = typeof price === 'string' ? parseInt(price.replace('₹', '').replace(',', '')) : price;
+        const existing = cart.find(i => i.id === id);
         if (existing) {
             existing.quantity++;
         } else {
-            cart.push({ name, price, quantity: 1 });
+            cart.push({ id, name, price, quantity: 1 });
         }
         saveCart();
         openModal(cartSidebar); // Open sidebar
@@ -661,12 +697,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+    document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         
         let total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
         
-        const newOrder = {
+        const orderData = {
             id: 'ORD-' + Math.floor(Math.random() * 1000000),
             date: new Date().toLocaleDateString(),
             items: [...cart],
@@ -677,43 +713,54 @@ document.addEventListener('DOMContentLoaded', () => {
             customerEmail: currentUser ? currentUser.email : 'Guest'
         };
 
-        orders.push(newOrder);
-        localStorage.setItem('hk_orders', JSON.stringify(orders));
+        const result = await API.createOrder(orderData);
 
-        cart = [];
-        saveCart();
-        closeAllModals();
-        alert(`Order placed successfully! Your Order ID is ${newOrder.id}`);
+        if (result.success) {
+            cart = [];
+            saveCart();
+            closeAllModals();
+            alert(`Order placed successfully! Your Order ID is ${result.order_id || orderData.id}`);
+        } else {
+            alert('Failed to place order: ' + (result.message || result.error));
+        }
     });
 
     // 8. Orders History
-    document.getElementById('openOrders').addEventListener('click', (e) => {
+    document.getElementById('openOrders').addEventListener('click', async (e) => {
         e.preventDefault();
         
         const userOrdersList = document.getElementById('userOrdersList');
-        const myOrders = orders.filter(o => o.customerEmail === currentUser.email);
+        userOrdersList.innerHTML = '<p class="text-center">Loading orders...</p>';
         
-        if (myOrders.length === 0) {
-            userOrdersList.innerHTML = '<p class="text-center">You have no past orders.</p>';
-        } else {
-            let html = '';
-            myOrders.reverse().forEach(ord => {
-                let itemsList = ord.items.map(i => `${i.quantity}x ${i.name}`).join('<br>');
-                html += `
-                    <div class="order-block">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <strong>${ord.id}</strong>
-                            <span style="color: var(--text-muted);">${ord.date}</span>
+        try {
+            const response = await fetch(`orders.php?email=${encodeURIComponent(currentUser.email)}`);
+            const myOrders = await response.json();
+            
+            if (!myOrders || myOrders.length === 0) {
+                userOrdersList.innerHTML = '<p class="text-center">You have no past orders.</p>';
+            } else {
+                let html = '';
+                myOrders.forEach(ord => {
+                    html += `
+                        <div class="order-block">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <strong>#${ord.id}</strong>
+                                <span style="color: var(--text-muted);">${ord.date}</span>
+                            </div>
+                            <div style="margin-bottom: 5px;">Status: <span style="color: var(--gold-highlight); font-weight:500;">${ord.status}</span></div>
+                            <div style="border-top: 1px solid rgba(0,0,0,0.05); padding-top: 10px; font-weight: 500;">
+                                Total: ₹${ord.total}
+                            </div>
                         </div>
-                        <div class="order-items-list">${itemsList}</div>
-                        <div style="border-top: 1px solid rgba(0,0,0,0.05); padding-top: 10px; font-weight: 500;">
-                            Total: ₹${ord.total}
-                        </div>
-                    </div>
-                `;
-            });
-            userOrdersList.innerHTML = html;
+                    `;
+                });
+                userOrdersList.innerHTML = html;
+            }
+        } catch (err) {
+            console.error("Order Fetch Error:", err);
+            userOrdersList.innerHTML = '<p class="text-center">Failed to load orders.</p>';
         }
+        
         openModal(ordersModal);
     });
 
@@ -907,7 +954,7 @@ document.addEventListener('DOMContentLoaded', () => {
         container.querySelectorAll('.add-to-cart-from-wish').forEach(btn => {
             btn.addEventListener('click', () => {
                 const prod = wishlist.find(w => w.id === btn.dataset.id);
-                if(prod) addToCart(prod.name, `₹${prod.price}`);
+                if(prod) addToCart(prod.id, prod.name, prod.price);
             });
         });
         
@@ -972,9 +1019,12 @@ document.addEventListener('DOMContentLoaded', () => {
             qvCount.textContent = `(${rating.count})`;
         }
         
-        const qvAddBtn = document.getElementById('qvAddToCart');
+        const qvAddBtn = document.getElementById('qvAddToCartBtn');
         if(qvAddBtn) {
-            qvAddBtn.onclick = () => { addToCart(prod.name, `₹${prod.price}`); closeAllModals(); };
+            qvAddBtn.onclick = () => { 
+                addToCart(prod.id, prod.name, prod.price); 
+                closeAllModals(); 
+            };
         }
         openModal(quickViewModal);
     };
