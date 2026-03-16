@@ -9,10 +9,11 @@
  */
 
 // Database configuration
-$host = 'localhost'; // Usually localhost for shared hosting
-$db_name = 'your_cpanel_username_hikari_db'; // Change this
-$username = 'your_cpanel_username_db_user'; // Change this
-$password = 'your_strong_password'; // Change this
+$host = 'localhost'; 
+$db_name = 'cambiopromotion_hikari_db';
+$username = 'cambiopromotion_hikari-us';
+$password = 'uSkMIZn#LQr#]$-C'; 
+
 
 try {
     // Create PDO connection
